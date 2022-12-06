@@ -36,7 +36,8 @@ new_textoh=textoh[6:-2]
 new_new='{'+textoh[1:2]+':'+textoh[2:-1]+'}'
 
 
-
+#df0 = pd.read_json(texto, orient='index')
+df = pd.read_json(textoh, lines=True)
 
 
 
