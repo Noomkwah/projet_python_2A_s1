@@ -45,3 +45,31 @@ listext=json.loads(textoh)
 #df = pd.read_json(listext, lines=True)
 df = pd.DataFrame(listext)
 df
+
+"""Comment partitionner l'espace ?
+pour l'instant : pas de 0.1 en longitude / 0.05 en latitude NON : 0.01 pour tous !
+lat : (51°05'21" N à 41°19'N)
+lon : (5°09'04" W à 9°33'36"E)
+"""
+
+
+startyear = 2016
+endyear = 2016
+c = 0
+df0 = pd.DataFrame(columns=['G(i)','T2m','WS10m','time','lat','lon'])
+for lon in [i/100 for i in range(0,500,1)]:
+  for lat in [j/100 for j in range(4400,4900,1)]:
+      url = "https://re.jrc.ec.europa.eu/api/seriescalc?lat="+str(lat)+"&lon="+str(lon)+"&startyear="+str(startyear)+"&endyear="+str(endyear)+"&month=0&showtemperatures=1&outputformat=json&browser=1"
+      r =requests.get(url)
+      w = r.json()['outputs']['hourly']
+      t = json.dumps(w, sort_keys=True, indent=4)
+      l =json.loads(t)
+      df1 = pd.DataFrame(l)
+      df1=df1.drop(['H_sun','Int'], axis=1)
+      df1['lat']=lat
+      df1['lon']=lon
+      df0 = pd.concat([df0,df1])
+      c+=1
+      print(c/(500**2))
+
+df0
