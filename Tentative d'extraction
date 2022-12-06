@@ -34,11 +34,14 @@ textoh = json.dumps(wboh, sort_keys=True, indent=4)
 #info = json.loads(data)
 new_textoh=textoh[6:-2]
 new_new='{'+textoh[1:2]+':'+textoh[2:-1]+'}'
+textoo = texto[:16]+'{'+texto[17:3268907]+'}'+texto[3268908:]
 
+listext=json.loads(textoh)
 
+#with open(text) as datafile:
+#    data = json.load(datafile)
+#retail = pd.DataFrame(data)
 #df0 = pd.read_json(texto, orient='index')
-df = pd.read_json(textoh, lines=True)
-
-
-
-
+#df = pd.read_json(listext, lines=True)
+df = pd.DataFrame(listext)
+df
